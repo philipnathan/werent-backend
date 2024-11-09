@@ -1,9 +1,11 @@
 from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import config
 
-db = SQLAlchemy()
+from .models import Dummy
+
+from .db import db
+
 migrate = Migrate()
 
 
