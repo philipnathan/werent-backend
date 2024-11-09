@@ -39,8 +39,24 @@ Sebelum menjalankan aplikasi, pastikan telah mendownload aplikasi berikut:
 Migrasi & update harus dilakukan di dalam docker, karena aplikasi berjalan di dalam docker. Berikut adalah cara melakukan migrasi.
 
 ```bash
-    docker-compose exec backend flask db migrate
+    # jalankan perintah dibawah satu per satu
+
+    docker-compose exec backend flask db migrate -m "add migrations message"
+
+    docker-compose exec backend flask db upgrade
 ```
+
+## Melihat database melalui aplikasi lainnya
+
+Jika ingin memeriksa data apa saja yang ada di dalam database, bisa menggunakan aplikasi seperti **_DBeaver_**. Berikut adalah data-data yang perlu diperhatikan:
+
+-   **Server Host**: localhost
+-   **Port**: 3307
+-   **Database**: db
+-   **Username**: root
+-   **Password**: db
+
+Seluruh informasi tersebut dapat dilihat dari **_.env.tempalte_**
 
 ## Important Note
 
