@@ -21,6 +21,7 @@ class DevelopmentConfig(Config):
         f"mysql+mysqlconnector://{username}:{password}@{host}:{port}/{database}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 class ProductionConfig(Config):
