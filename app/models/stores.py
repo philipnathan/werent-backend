@@ -10,6 +10,7 @@ class Stores(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False, unique=True)
     store_address = db.Column(db.Text, nullable=False)
+    district_id = db.Column(db.Integer, db.ForeignKey("districts.id"), nullable=False)
     image_url = db.Column(db.Text, nullable=True)
     is_active = db.Column(db.Boolean(), nullable=False, default=True)
     created_at = db.Column(
@@ -24,13 +25,22 @@ class Stores(db.Model):
     def __repr__(self):
         return "<Stores %r>" % self.name
 
-    def __init__(self, name, store_address, user_id):
+    def __init__(self, name, store_address, user_id, district_id):
         self.name = name
         self.store_address = store_address
         self.user_id = user_id
+        self.district_id = district_id
 
     def to_dict(self):
-        return {"id": self.id, "name": self.name, "store_address": self.store_address}
+        district = self.districts.to_dict() if self.districts else {}
+
+        return {
+            "id": self.id,
+            "name": self.name,
+            "store_address": self.store_address,
+            "image_url": self.image_url,
+            "district": district,
+        }
 
     def set_to_inactive(self):
         self.is_active = False
