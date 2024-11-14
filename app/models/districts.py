@@ -16,6 +16,9 @@ class Districts(db.Model):
     )
 
     stores = db.relationship("Stores", backref="districts_stores")
+    shipment_addresses = db.relationship(
+        "ShipmentAddresses", backref="districts_shipment_addresses"
+    )
 
     def __repr__(self):
         return "<Districts %r>" % self.district_name

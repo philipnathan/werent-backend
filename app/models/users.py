@@ -23,6 +23,9 @@ class User(db.Model):
     )
 
     stores = db.relationship("Stores", backref="users_stores")
+    shipment_addresses = db.relationship(
+        "ShipmentAddresses", backref="users_shipment_addresses"
+    )
 
     def __repr__(self):
         return "<User %r>" % self.username
