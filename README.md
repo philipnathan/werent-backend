@@ -34,6 +34,17 @@ Sebelum menjalankan aplikasi, pastikan telah mendownload aplikasi berikut:
     docker-compose down
 ```
 
+4. Jika ingin memulai semuanya dari awal jika terjadi error
+```bash
+    # hapus terlebih dahulu folder 'Migrations'
+    # kemudian jalankan perintah berikut
+
+    docker-compose down -v
+
+    # perintah tersebuh akan menghapus semua volume, network, dan container yang ada (image tetap ada)
+```
+
+
 ## Melakukan Migrasi & Upgrade
 
 Migrasi & update harus dilakukan di dalam docker, karena aplikasi berjalan di dalam docker. Berikut adalah cara melakukan migrasi.
