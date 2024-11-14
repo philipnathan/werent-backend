@@ -2,7 +2,16 @@ from flask import Flask, jsonify
 from flask_migrate import Migrate
 from config import config
 
-from .models import Dummy
+from .models import (
+    Dummy,
+    Districts,
+    Products,
+    ShipmentAddresses,
+    Stores,
+    Transactions,
+    Users,
+    VariantOptions,
+)
 
 from .db import db
 
