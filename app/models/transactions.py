@@ -15,10 +15,13 @@ class Transactions(db.Model):
         db.DateTime(), nullable=False, default=lambda: datetime.now(pytz.UTC)
     )
 
+    rent_details = db.relationship("RentDetails", backref="transactions_rent_details")
+
     def __repr__(self):
         return "<Transactions %r>" % self.id
 
     def __init__(self, shipment_address_id):
+
         self.shipment_address_id = shipment_address_id
 
     def to_dict(self):

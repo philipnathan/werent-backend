@@ -23,6 +23,10 @@ class VariantOptions(db.Model):
         "VariantMedias", backref="variant_options_variant_medias"
     )
 
+    rent_details = db.relationship(
+        "RentDetails", backref="rent_details_variant_options"
+    )
+
     def __init__(self, product_id, variant_name, total_stock, price):
         self.product_id = product_id
         self.variant_name = variant_name
