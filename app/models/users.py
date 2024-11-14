@@ -13,6 +13,7 @@ class User(db.Model):
     username = db.Column(db.String(80), nullable=False, unique=True)
     phone_number = db.Column(db.String(14), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
+    image_url = db.Column(db.Text, nullable=True)
     is_active = db.Column(db.Boolean(), nullable=False, default=True)
     created_at = db.Column(
         db.DateTime(), nullable=False, default=lambda: datetime.now(pytz.UTC)

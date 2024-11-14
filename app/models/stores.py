@@ -10,6 +10,7 @@ class Stores(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False, unique=True)
     store_address = db.Column(db.Text, nullable=False)
+    image_url = db.Column(db.Text, nullable=True)
     is_active = db.Column(db.Boolean(), nullable=False, default=True)
     created_at = db.Column(
         db.DateTime(), nullable=False, default=lambda: datetime.now(pytz.UTC)
