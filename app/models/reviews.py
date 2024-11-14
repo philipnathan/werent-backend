@@ -20,10 +20,18 @@ class Reviews(db.Model):
         "ReviewLikes",
         backref="reviews_review_likes",
     )
+    review_medias = db.relationship(
+        "ReviewMedias",
+        backref="reviews_review_medias",
+    )
 
     @property
     def like_count(self):
         return len(self.review_likes)
+
+    @property
+    def media_list(self):
+        return [media.to_dict() for media in self.review_medias]
 
     def __init__(self, user_id, product_id, rating, comment):
         self.user_id = user_id
@@ -42,4 +50,5 @@ class Reviews(db.Model):
             "comment": self.comment,
             "created_at": self.created_at,
             "like_count": self.like_count,
+            "review_medias": self.media_list,
         }
