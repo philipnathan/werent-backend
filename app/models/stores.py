@@ -22,6 +22,8 @@ class Stores(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
+    products = db.relationship("Products", backref="stores_products")
+
     def __repr__(self):
         return "<Stores %r>" % self.name
 
