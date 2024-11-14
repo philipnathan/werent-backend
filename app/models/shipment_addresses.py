@@ -22,6 +22,10 @@ class ShipmentAddresses(db.Model):
         db.DateTime(), nullable=True, onupdate=lambda: datetime.now(pytz.UTC)
     )
 
+    transactions = db.relationship(
+        "Transactions", backref="shipment_addresses_transactions"
+    )
+
     def __repr__(self):
         return "<ShipmentAddresses %r>" % self.receiver_name
 
