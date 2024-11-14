@@ -21,6 +21,10 @@ class Products(db.Model):
         db.DateTime(), nullable=True, onupdate=lambda: datetime.now(pytz.UTC)
     )
 
+    variant_options = db.relationship(
+        "VariantOptions", backref="products_variant_options"
+    )
+
     def __repr__(self):
         return "<Products %r>" % self.name
 
@@ -38,6 +42,10 @@ class Products(db.Model):
 
     def to_dict(self):
         store = self.stores.to_dict() if self.stores else {}
+        variant_options = [option.to_dict() for option in self.variant_options]
+        price = [option.price for option in variant_options if "price" in option]
+        min_price = min(price) if price else None
+        max_price = max(price) if price else None
 
         return {
             "id": self.id,
@@ -46,4 +54,7 @@ class Products(db.Model):
             "description": self.description,
             "is_active": self.is_active,
             "store": store,
+            "variant_options": variant_options,
+            "min_price": min_price,
+            "max_price": max_price,
         }
