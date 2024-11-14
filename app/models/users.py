@@ -5,10 +5,10 @@ from datetime import datetime
 from ..db import db
 
 
-class User(db.Model):
+class Users(db.Model):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True, auto_increment=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(80), nullable=False, unique=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
     phone_number = db.Column(db.String(14), unique=True, nullable=False)
@@ -30,9 +30,10 @@ class User(db.Model):
     def __repr__(self):
         return "<User %r>" % self.username
 
-    def __init__(self, email, username, password):
+    def __init__(self, email, username, password, phone_number):
         self.email = email
         self.username = username
+        self.phone_number = phone_number
         self.password = self.set_password(password)
 
     def set_password(self, password):
@@ -47,4 +48,9 @@ class User(db.Model):
     def to_dict(self):
         stores = self.users_stores.to_dict() if self.user_stores else {}
 
-        return {"email": self.email, "username": self.username, "stores": stores}
+        return {
+            "email": self.email,
+            "username": self.username,
+            "stores": stores,
+            "phone_number": self.phone_number,
+        }
