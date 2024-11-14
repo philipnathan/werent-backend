@@ -1,4 +1,5 @@
 import pytz
+import slugify
 from datetime import datetime
 
 from ..db import db
@@ -9,6 +10,7 @@ class Stores(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False, unique=True)
+    slug = db.Column(db.String(30), nullable=False, unique=True)
     store_address = db.Column(db.Text, nullable=False)
     district_id = db.Column(db.Integer, db.ForeignKey("districts.id"), nullable=False)
     image_url = db.Column(db.Text, nullable=True)
@@ -29,6 +31,7 @@ class Stores(db.Model):
 
     def __init__(self, name, store_address, user_id, district_id):
         self.name = name
+        self.slug = slugify(name)
         self.store_address = store_address
         self.user_id = user_id
         self.district_id = district_id
