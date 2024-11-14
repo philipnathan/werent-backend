@@ -24,6 +24,7 @@ class Products(db.Model):
     variant_options = db.relationship(
         "VariantOptions", backref="products_variant_options"
     )
+    reviews = db.relationship("Reviews", backref="products_reviews")
 
     def __repr__(self):
         return "<Products %r>" % self.name
@@ -46,6 +47,7 @@ class Products(db.Model):
         price = [option.price for option in variant_options if "price" in option]
         min_price = min(price) if price else None
         max_price = max(price) if price else None
+        reviews = [review.to_dict() for review in self.reviews]
 
         return {
             "id": self.id,
@@ -57,4 +59,5 @@ class Products(db.Model):
             "variant_options": variant_options,
             "min_price": min_price,
             "max_price": max_price,
+            "reviews": reviews,
         }
