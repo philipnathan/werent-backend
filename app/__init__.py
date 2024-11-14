@@ -3,13 +3,19 @@ from flask_migrate import Migrate
 from config import config
 
 from .models import (
-    Dummy,
     Districts,
     Products,
+    RentDetails,
+    ReviewLikes,
+    ReviewMedias,
+    Reviews,
     ShipmentAddresses,
     Stores,
     Transactions,
+    UserCarts,
+    UserWishlists,
     Users,
+    VariantMedias,
     VariantOptions,
 )
 
