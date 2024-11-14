@@ -19,6 +19,10 @@ class VariantOptions(db.Model):
         db.DateTime(), nullable=True, onupdate=lambda: datetime.now(pytz.UTC)
     )
 
+    variant_medias = db.relationship(
+        "VariantMedias", backref="variant_options_variant_medias"
+    )
+
     def __init__(self, product_id, variant_name, total_stock, price):
         self.product_id = product_id
         self.variant_name = variant_name
@@ -29,10 +33,15 @@ class VariantOptions(db.Model):
         return "<VariantOptions %r>" % self.id
 
     def to_dict(self):
+        variant_medias = [
+            variant_media.to_dict() for variant_media in self.variant_medias
+        ]
+
         return {
             "id": self.id,
             "product_id": self.product_id,
             "variant_name": self.variant_name,
+            "variant_medias": variant_medias,
             "total_stock": self.total_stock,
             "price": self.price,
         }
