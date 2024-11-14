@@ -21,6 +21,8 @@ class User(db.Model):
         db.DateTime(), nullable=True, onupdate=lambda: datetime.now(pytz.UTC)
     )
 
+    stores = db.relationship("Stores", backref="users_stores")
+
     def __repr__(self):
         return "<User %r>" % self.username
 
@@ -39,4 +41,6 @@ class User(db.Model):
         self.is_active = False
 
     def to_dict(self):
-        return {"email": self.email, "username": self.username}
+        stores = self.users_stores.to_dict() if self.user_stores else {}
+
+        return {"email": self.email, "username": self.username, "stores": stores}
