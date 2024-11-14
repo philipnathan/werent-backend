@@ -16,6 +16,15 @@ class Reviews(db.Model):
         db.DateTime(), nullable=False, default=lambda: datetime.now(pytz.UTC)
     )
 
+    review_likes = db.relationship(
+        "ReviewLikes",
+        backref="reviews_review_likes",
+    )
+
+    @property
+    def like_count(self):
+        return len(self.review_likes)
+
     def __init__(self, user_id, product_id, rating, comment):
         self.user_id = user_id
         self.product_id = product_id
@@ -32,4 +41,5 @@ class Reviews(db.Model):
             "rating": self.rating,
             "comment": self.comment,
             "created_at": self.created_at,
+            "like_count": self.like_count,
         }
