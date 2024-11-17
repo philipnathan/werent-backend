@@ -14,6 +14,8 @@ class Products(db.Model):
     slug = db.Column(db.String(140), nullable=False)
     description = db.Column(db.Text, nullable=False)
     is_active = db.Column(db.Boolean(), nullable=False, default=True)
+    fit = db.Column(db.String(20), nullable=False)
+    fabric = db.Column(db.String(20), nullable=False)
     created_at = db.Column(
         db.DateTime(), nullable=False, default=lambda: datetime.now(pytz.UTC)
     )
@@ -45,19 +47,22 @@ class Products(db.Model):
         store = self.stores.to_dict() if self.stores else {}
         variant_options = [option.to_dict() for option in self.variant_options]
         price = [option.price for option in variant_options if "price" in option]
-        min_price = min(price) if price else None
-        max_price = max(price) if price else None
+        first_price = price[0] if price else 0
         reviews = [review.to_dict() for review in self.reviews]
+        total_reviews = len(reviews)
+        average_rating = sum([review.rating for review in reviews]) / total_reviews
 
         return {
             "id": self.id,
             "name": self.name,
-            "slug": self.slug,
             "description": self.description,
             "is_active": self.is_active,
             "store": store,
             "variant_options": variant_options,
-            "min_price": min_price,
-            "max_price": max_price,
+            "price": first_price,
             "reviews": reviews,
+            "fit": self.fit,
+            "fabric": self.fabric,
+            "total_reviews": total_reviews,
+            "average_rating": average_rating,
         }
