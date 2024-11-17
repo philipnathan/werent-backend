@@ -12,6 +12,8 @@ class VariantOptions(db.Model):
     variant_name = db.Column(db.String(20), nullable=False)
     total_stock = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    bust = db.Column(db.Integer, nullable=False)
+    length = db.Column(db.Integer, nullable=False)
     created_at = db.Column(
         db.DateTime(), nullable=False, default=lambda: datetime.now(pytz.UTC)
     )
@@ -48,6 +50,8 @@ class VariantOptions(db.Model):
             "variant_medias": variant_medias,
             "total_stock": self.total_stock,
             "price": self.price,
+            "bust": self.bust,
+            "length": self.length,
         }
 
     # TODO
