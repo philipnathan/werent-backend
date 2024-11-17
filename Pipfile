@@ -12,6 +12,7 @@ flask-migrate = "==4.0.7"
 pytz = "==2024.2"
 bcrypt = "==4.2.0"
 python-slugify = "==8.0.4"
+flask-jwt-extended = "*"
 
 [dev-packages]
 

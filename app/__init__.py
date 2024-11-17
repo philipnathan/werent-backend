@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_migrate import Migrate
 from config import config
+from flask_jwt_extended import JWTManager
 
 from .models import (
     Districts,
@@ -19,9 +20,12 @@ from .models import (
     VariantOptions,
 )
 
+from .controllers import users_routes
+
 from .db import db
 
 migrate = Migrate()
+jwt = JWTManager()
 
 
 def create_app(config_name="default"):
@@ -30,8 +34,11 @@ def create_app(config_name="default"):
 
     app.config.from_object(config[config_name])
 
+    app.register_blueprint(users_routes)
+
     db.init_app(app)
     migrate.init_app(app, db)
+    jwt.init_app(app)
 
     @app.route("/", methods=["GET"])
     def home():
