@@ -1,0 +1,38 @@
+tags:
+    - Users
+summary: Create User
+description: Create User
+parameters:
+    - name: username
+      in: formData
+      required: true
+      type: string
+    - name: email
+      in: formData
+      required: true
+      type: string
+    - name: password
+      in: formData
+      required: true
+      type: string
+    - name: phone_number
+      in: formData
+      required: true
+      type: string
+responses:
+    201:
+        description: User created
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: "Success to Create New User"
+    500:
+        description: Internal Server Error
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: "Fail to Register New User"

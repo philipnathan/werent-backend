@@ -1,0 +1,33 @@
+tags:
+    - Users
+summary: Edit user password
+description: Edit user password
+parameters:
+    - name: Authorization
+      in: header
+      description: Format - Bearer {access_token}
+      schema:
+          type: string
+          example: Bearer <access_token>
+      required: true
+    - name: password
+      in: formData
+      required: true
+      type: string
+responses:
+    200:
+        description: User Updated
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: "User updated successfully"
+    500:
+        description: Internal Server Error
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: "Failed to update user"

@@ -1,8 +1,9 @@
 from flask import Flask, jsonify
 from flask_migrate import Migrate
-from config import config
 from flask_jwt_extended import JWTManager
+from flasgger import Swagger
 
+from config import config
 from .models import (
     Districts,
     Products,
@@ -39,6 +40,7 @@ def create_app(config_name="default"):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
+    Swagger(app)
 
     @app.route("/", methods=["GET"])
     def home():

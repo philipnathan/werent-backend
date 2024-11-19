@@ -1,0 +1,46 @@
+tags:
+    - Users
+summary: Refresh Access Token
+description: Refresh Access Token
+parameters:
+    - name: Authorization
+      in: header
+      description: Format - Bearer {refresh_token}
+      schema:
+          type: string
+          example: Bearer <refresh_token>
+      required: true
+responses:
+    200:
+        description: Access Token Refreshed
+        content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        access_token:
+                            type: string
+                            example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjQ5NzU0MDU4fQ.3yU0fQ0pZfWVbqZ0UuL5UdWqo9mB0nEw"
+                        message:
+                            type: string
+                            example: "Access token refreshed successfully"
+    404:
+        description: User not found
+        content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        message:
+                            type: string
+                            example: "User not found"
+    500:
+        description: Internal Server Error
+        content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        message:
+                            type: string
+                            example: "Failed to refresh access token"

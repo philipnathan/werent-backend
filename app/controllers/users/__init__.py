@@ -6,6 +6,7 @@ from flask_jwt_extended import (
     get_jwt_identity,
     get_jwt,
 )
+from flasgger import swag_from
 
 # from connectors.mysql_connectors import connection
 from app.models.users import Users
@@ -15,6 +16,7 @@ users_routes = Blueprint("users_routes", __name__, url_prefix="/api/v1")
 
 
 @users_routes.route("/auth/register", methods=["POST"])
+@swag_from("./register_user.yml")
 def register_user():
     try:
         NewUser = Users(
@@ -31,10 +33,11 @@ def register_user():
         db.session.rollback()
         return {"message": "Fail to Register New User"}, 500
 
-    return {"message": "Success to Create New User"}, 200
+    return {"message": "Success to Create New User"}, 201
 
 
 @users_routes.route("/auth/login", methods=["POST"])
+@swag_from("./login_user.yml")
 def login_user():
     try:
         email = request.form["email"]
@@ -48,13 +51,13 @@ def login_user():
             return {"message": "Invalid password"}, 403
 
         acces_token = create_access_token(
-            identity=user.id,
-            additional_claims={"email": user.email, "id": user.id},
+            identity=str(user.id),
+            additional_claims={"email": user.email, "id": str(user.id)},
         )
         # s.flush()
         db.session.flush()
 
-        refresh_token = create_refresh_token(identity=user.id)
+        refresh_token = create_refresh_token(identity=str(user.id))
         return {
             "email": user.email,
             "id": user.id,
@@ -70,6 +73,7 @@ def login_user():
 
 @users_routes.route("/auth/refresh", methods=["POST"])
 @jwt_required(refresh=True)
+@swag_from("./refresh_token.yml")
 def refresh_token():
     try:
         # Get the user's identity from the refresh token
@@ -83,8 +87,8 @@ def refresh_token():
 
         # Create a new access token
         new_access_token = create_access_token(
-            identity=user.id,
-            additional_claims={"email": user.email, "id": user.id},
+            identity=str(user.id),
+            additional_claims={"email": user.email, "id": str(user.id)},
         )
         return {
             "access_token": new_access_token,
@@ -116,6 +120,7 @@ def get_current_user():
 
 @users_routes.route("/users/me", methods=["PUT"])
 @jwt_required()
+@swag_from("./edit_user.yml")
 def update_current_user():
     current_user_id = get_jwt_identity()
     print(current_user_id)
@@ -143,6 +148,7 @@ def update_current_user():
 
 @users_routes.route("/users/me", methods=["DELETE"])
 @jwt_required()
+@swag_from("./delete_user.yml")
 def delete_current_user():
     current_user_id = get_jwt_identity()
     try:

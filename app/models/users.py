@@ -50,6 +50,7 @@ class Users(db.Model):
         stores = self.users_stores.to_dict() if self.user_stores else {}
 
         return {
+            "id": self.id,
             "email": self.email,
             "username": self.username,
             "stores": stores,

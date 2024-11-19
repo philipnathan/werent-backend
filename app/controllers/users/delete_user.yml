@@ -1,0 +1,43 @@
+tags:
+    - Users
+summary: Delete / Inactive User
+description: Delete / Inactive User
+parameters:
+    - name: Authorization
+      in: header
+      description: Format - Bearer {access_token}
+      schema:
+          type: string
+          example: Bearer <access_token>
+      required: true
+responses:
+    200:
+        description: User deleted
+        content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        message:
+                            type: string
+                            example: "User deleted successfully"
+    404:
+        description: User not found
+        content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        message:
+                            type: string
+                            example: "User not found"
+    500:
+        description: Internal Server Error
+        content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        message:
+                            type: string
+                            example: "Failed to delete user"

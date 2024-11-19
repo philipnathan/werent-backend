@@ -1,0 +1,50 @@
+tags:
+    - Users
+summary: Login User
+description: Login User
+parameters:
+    - name: email
+      in: formData
+      required: true
+      type: string
+    - name: password
+      in: formData
+      required: true
+      type: string
+responses:
+    200:
+        description: User Login Successfully
+        schema:
+            type: object
+            properties:
+                email:
+                    type: string
+                    example: "admin@admin.com"
+                id:
+                    type: integer
+                    example: 1
+                access_token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjQ5NzU0MDU4fQ.3yU0fQ0pZfWVbqZ0UuL5UdWqo9mB0nEw"
+                refresh_token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjQ5NzU0MDU4fQ.3yU0fQ0pZfWVbqZ0UuL5UdWqo9mB0nEw"
+                message:
+                    type: string
+                    example: "Success to Login user"
+    403:
+        description: Invalid Password
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: "Invalid Password"
+    500:
+        description: Internal Server Error
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: "Failed to Login User"
