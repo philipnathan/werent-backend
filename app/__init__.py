@@ -40,7 +40,10 @@ def create_app(config_name="default"):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
+<<<<<<< HEAD
     Swagger(app)
+=======
+>>>>>>> 564886eba0b6e9c9f4b723486e0fad5c2bbbb7b0
 
     @app.route("/", methods=["GET"])
     def home():
