@@ -20,7 +20,7 @@ export FLASK_APP=run.py
 export FLASK_ENV=${FLASK_ENV}
 
 cd /backend
-flask db init || true
+flask db init
 flask db migrate
 flask db upgrade
 python run.py
