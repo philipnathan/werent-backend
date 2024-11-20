@@ -1,0 +1,42 @@
+tags:
+    - Products
+summary: Add like to review
+description: Add like to review
+parameters:
+    - name: Authorization
+      in: header
+      description: Format - Bearer {access_token}
+      schema:
+          type: string
+          example: Bearer <access_token>
+      required: true
+    - name: review_id
+      in: path
+      required: true
+      type: string
+      example: "60cbceb7-5a07-4a3d-8218-8c71ce96a7ed"
+responses:
+    201:
+        description: Like added
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: "Like added successfully"
+    400:
+        description: Input Validation Error
+        schema:
+            type: object
+            properties:
+                error:
+                    type: string
+                    example: "Review not found"
+    500:
+        description: Internal Server Error
+        schema:
+            type: object
+            properties:
+                error:
+                    type: string
+                    example: "Internal Server Error"
