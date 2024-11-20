@@ -41,6 +41,7 @@ class VariantOptions(db.Model):
         return "<VariantOptions %r>" % self.id
 
     def to_dict(self):
+
         variant_medias = [
             variant_media.to_dict() for variant_media in self.variant_medias
         ]
