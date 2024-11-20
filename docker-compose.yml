@@ -30,19 +30,7 @@ services:
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_DATABASE=${MYSQL_DATABASE}
             - FLASK_ENV=${FLASK_ENV}
-        restart: unless-stopped
-        networks:
-            - app_network
-
-    nginx:
-        image: nginx:latest
-        container_name: nginx
-        ports:
-            - "80:80"
-        volumes:
-            - ./app/nginx/:/etc/nginx/conf.d/
-        depends_on:
-            - backend
+            - PYTHONUNBUFFERED=1
         restart: unless-stopped
         networks:
             - app_network

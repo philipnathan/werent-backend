@@ -3,8 +3,10 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flasgger import Swagger
 from flask_cors import CORS
+from app.config import config
 
-from config import config
+from app.controllers.reviews import reviews_blueprint
+
 from .models import (
     Districts,
     Products,
@@ -43,6 +45,8 @@ def create_app(config_name="default"):
     jwt.init_app(app)
     Swagger(app)
     CORS(app)
+
+    app.register_blueprint(reviews_blueprint)
 
     @app.route("/", methods=["GET"])
     def home():
