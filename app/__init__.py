@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flasgger import Swagger
+from flask_cors import CORS
 
 from config import config
 from .models import (
@@ -41,6 +42,7 @@ def create_app(config_name="default"):
     migrate.init_app(app, db)
     jwt.init_app(app)
     Swagger(app)
+    CORS(app)
 
     @app.route("/", methods=["GET"])
     def home():
