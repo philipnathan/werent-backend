@@ -20,6 +20,8 @@ class ReviewService:
 
     def get_product_reviews(self, product_id):
         reviews = self.review_repository.get_reviews(product_id=product_id)
+        if not reviews:
+            return []
         return [review.to_dict() for review in reviews]
 
     def add_review(self, user_id, form, medias, product_id):

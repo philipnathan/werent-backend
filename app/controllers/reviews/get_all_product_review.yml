@@ -1,0 +1,59 @@
+tags:
+    - Products
+summary: Get all reviews of a product
+description: Get all reviews of a product
+parameters:
+    - name: product_id
+      in: path
+      required: true
+      type: integer
+      example: 1
+responses:
+    200:
+        description: List of reviews
+        schema:
+            type: array
+            items:
+                type: object
+                properties:
+                    id:
+                        type: integer
+                        example: 1
+                    user:
+                        type: string
+                        example: "User 1"
+                    product_id:
+                        type: integer
+                        example: 1
+                    rating:
+                        type: number
+                        example: 5
+                    comment:
+                        type: string
+                        example: "This product is great!"
+                    created_at:
+                        type: string
+                        example: "2022-01-01T00:00:00Z"
+                    like_count:
+                        type: integer
+                        example: 0
+                    review_medias:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                                id:
+                                    type: integer
+                                    example: 1
+                                review_id:
+                                    type: integer
+                                    example: 1
+                                url:
+                                    tyoe: string
+                                    example: "https://www.google.com"
+                                format_media:
+                                    type: string
+                                    example: "image/jpg"
+                                position:
+                                    type: integer
+                                    example: 0
