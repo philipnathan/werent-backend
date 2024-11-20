@@ -30,3 +30,12 @@ def add_product_review(product_id):
     return service.add_review(
         product_id=product_id, user_id=user_id, form=form, medias=medias
     )
+
+
+@reviews_blueprint.route("/reviews/<string:review_id>", methods=["POST"])
+@jwt_required()
+@swag_from("./add_like.yml")
+def add_likes(review_id):
+    identity = get_jwt_identity()
+    user_id = int(identity)
+    return service.add_likes(review_id=review_id, user_id=user_id)

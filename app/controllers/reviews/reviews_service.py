@@ -132,3 +132,33 @@ class ReviewService:
         all_reviews = self.review_repository.get_reviews()
 
         return [review.to_dict() for review in all_reviews]
+
+    def add_likes(self, review_id, user_id):
+        try:
+            review = self.review_repository.get_review_by_id(review_id=review_id)
+
+            if not review:
+                raise ValueError("Review not found")
+
+            review_like = self.review_repository.get_review_like_by_user_id(
+                user_id=user_id, review_id=review_id
+            )
+
+            if review_like:
+                self.db.session.delete(review_like)
+                self.db.session.commit()
+
+                return {"message": "Like removed successfully"}, 200
+
+            new_like = self.review_repository.create_review_like(
+                user_id=user_id, review_id=review_id
+            )
+            self.db.session.add(new_like)
+            self.db.session.commit()
+
+            return {"message": "Like added successfully"}, 201
+
+        except ValueError as e:
+            return {"error": str(e)}, 400
+        except Exception as e:
+            return {"error": str(e)}, 500
