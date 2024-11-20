@@ -6,6 +6,7 @@ from flask_cors import CORS
 from app.config import config
 
 from app.controllers.reviews import reviews_blueprint
+from app.controllers.products import products_blueprint
 
 from .models import (
     Districts,
@@ -47,6 +48,7 @@ def create_app(config_name="default"):
     CORS(app)
 
     app.register_blueprint(reviews_blueprint)
+    app.register_blueprint(products_blueprint)
 
     @app.route("/", methods=["GET"])
     def home():
