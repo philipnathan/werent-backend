@@ -23,4 +23,5 @@ cd /backend
 flask db init
 flask db migrate
 flask db upgrade
+python seed_data.py
 python run.py
