@@ -20,8 +20,7 @@ services:
         ports:
             - "5000"
         depends_on:
-            - db:
-                  condition: service_healthy
+            - db
         environment:
             - MYSQL_HOST=db
             - MYSQL_PORT=3306
