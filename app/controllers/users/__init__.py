@@ -52,7 +52,11 @@ def login_user():
 
         acces_token = create_access_token(
             identity=str(user.id),
-            additional_claims={"email": user.email, "id": str(user.id)},
+            additional_claims={
+                "email": user.email,
+                "id": str(user.id),
+                "image_url": user.image_url,
+            },
         )
         # s.flush()
         db.session.flush()
@@ -113,6 +117,7 @@ def logout_user():
 
 @users_routes.route("/users/me", methods=["GET"])
 @jwt_required()
+@swag_from("./get_user.yml")
 def get_current_user():
     claims = get_jwt()
     return {"claims": claims}

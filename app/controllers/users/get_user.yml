@@ -1,0 +1,54 @@
+tags:
+    - Users
+summary: Get user information
+description: Get user information
+parameters:
+    - name: Authorization
+      in: header
+      description: Format - Bearer {access_token}
+      schema:
+          type: string
+          example: Bearer <access_token>
+      required: true
+responses:
+    200:
+        description: User information
+        schema:
+            type: object
+            properties:
+                claims:
+                    type: object
+                    properties:
+                        csrf:
+                            type: string
+                            example: "679fba4f-45b8-4922-ac7e-9d505c3e438d"
+                        email:
+                            type: string
+                            example: "admin@admin.com"
+                        exp:
+                            type: integer
+                            example: 1643601200
+                        fresh:
+                            type: boolean
+                            example: false
+                        iat:
+                            type: integer
+                            example: 1643601200
+                        id:
+                            type: integer
+                            example: 1
+                        image_url:
+                            type: string
+                            example: "https://www.google.com"
+                        jti:
+                            type: string
+                            example: "679fba4f-45b8-4922-ac7e-9d505c3e438d"
+                        nbf:
+                            type: integer
+                            example: 1643601200
+                        sub:
+                            type: string
+                            example: "1"
+                        type:
+                            type: string
+                            example: "access"
