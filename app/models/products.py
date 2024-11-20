@@ -46,13 +46,16 @@ class Products(db.Model):
         self.is_active = True
 
     def to_dict(self):
-        store = self.stores.to_dict() if self.stores else {}
+        store = self.stores_products.to_dict() if self.stores_products else {}
         variant_options = [option.to_dict() for option in self.variant_options]
-        price = [option.price for option in variant_options if "price" in option]
-        first_price = price[0] if price else 0
+        first_price = variant_options[0]["price"]
         reviews = [review.to_dict() for review in self.reviews]
-        total_reviews = len(reviews)
-        average_rating = sum([review.rating for review in reviews]) / total_reviews
+        total_reviews = len(reviews) if reviews else 0
+        average_rating = (
+            sum([review["rating"] for review in reviews]) / total_reviews
+            if total_reviews > 0
+            else 0
+        )
 
         return {
             "id": self.id,

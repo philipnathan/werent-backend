@@ -29,6 +29,6 @@ class VariantMedias(db.Model):
             "id": self.id,
             "variant_option_id": self.variant_option_id,
             "url": self.url,
-            "format": self.format,
+            "format_item": self.format_item,
             "position": self.position,
         }
