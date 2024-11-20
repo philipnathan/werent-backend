@@ -1,0 +1,36 @@
+tags:
+    - Products
+summary: Get all products
+description: Get all products
+responses:
+    200:
+        description: List of products
+        schema:
+            type: array
+            items:
+                type: object
+                properties:
+                    id:
+                        type: integer
+                        example: 1
+                    name:
+                        type: string
+                        example: "Product 1"
+                    is_active:
+                        type: boolean
+                        example: true
+                    store_name:
+                        type: string
+                        example: "Store 1"
+                    price:
+                        type: number
+                        example: 1000
+                    total_reviews:
+                        type: integer
+                        example: 0
+                    average_rating:
+                        type: number
+                        example: 0
+                    image_url:
+                        type: string
+                        example: "https://www.google.com"
