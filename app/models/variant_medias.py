@@ -1,13 +1,7 @@
 import pytz
 from datetime import datetime
-from enum import Enum
 
 from ..db import db
-
-
-class MediaFormat(Enum):
-    IMAGE = "image"
-    VIDEO = "video"
 
 
 class VariantMedias(db.Model):
@@ -18,16 +12,16 @@ class VariantMedias(db.Model):
         db.Integer, db.ForeignKey("variant_options.id"), nullable=False
     )
     url = db.Column(db.Text, nullable=False)
-    format = db.Column(db.Enum(MediaFormat), nullable=False)
+    format_item = db.Column(db.String(50), nullable=False)
     position = db.Column(db.Integer, nullable=False)
     created_at = db.Column(
         db.DateTime(), nullable=False, default=lambda: datetime.now(pytz.UTC)
     )
 
-    def __init__(self, variant_option_id, url, format, position):
+    def __init__(self, variant_option_id, url, format_item, position):
         self.variant_option_id = variant_option_id
         self.url = url
-        self.format = format
+        self.format_item = format_item
         self.position = position
 
     def to_dict(self):

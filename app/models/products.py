@@ -31,11 +31,13 @@ class Products(db.Model):
     def __repr__(self):
         return "<Products %r>" % self.name
 
-    def __init__(self, name, store_id, description):
+    def __init__(self, name, store_id, description, fit, fabric):
         self.store_id = store_id
         self.name = name
-        self.slug = slugify(name)
+        self.slug = slugify.slugify(name)
         self.description = description
+        self.fit = fit
+        self.fabric = fabric
 
     def set_to_inactive(self):
         self.is_active = False

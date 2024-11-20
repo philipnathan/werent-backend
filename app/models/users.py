@@ -31,11 +31,12 @@ class Users(db.Model):
     def __repr__(self):
         return "<User %r>" % self.username
 
-    def __init__(self, email, username, password, phone_number):
+    def __init__(self, email, username, password, phone_number, image_url):
         self.email = email
         self.username = username
         self.phone_number = phone_number
         self.password = self.set_password(password)
+        self.image_url = image_url
 
     def set_password(self, password):
         return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
@@ -47,12 +48,12 @@ class Users(db.Model):
         self.is_active = False
 
     def to_dict(self):
-        stores = self.users_stores.to_dict() if self.user_stores else {}
+        store = self.stores.to_dict() if self.stores else {}
 
         return {
             "id": self.id,
             "email": self.email,
             "username": self.username,
-            "stores": stores,
+            "stores": store,
             "phone_number": self.phone_number,
         }

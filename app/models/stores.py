@@ -29,15 +29,16 @@ class Stores(db.Model):
     def __repr__(self):
         return "<Stores %r>" % self.name
 
-    def __init__(self, name, store_address, user_id, district_id):
+    def __init__(self, name, store_address, user_id, district_id, image_url):
         self.name = name
-        self.slug = slugify(name)
+        self.slug = slugify.slugify(name)
         self.store_address = store_address
         self.user_id = user_id
         self.district_id = district_id
+        self.image_url = image_url
 
     def to_dict(self):
-        district = self.districts.to_dict() if self.districts else {}
+        district = self.districts_stores.to_dict() if self.districts_stores else {}
 
         return {
             "id": self.id,

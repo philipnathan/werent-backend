@@ -29,11 +29,13 @@ class VariantOptions(db.Model):
         "RentDetails", backref="rent_details_variant_options"
     )
 
-    def __init__(self, product_id, variant_name, total_stock, price):
+    def __init__(self, product_id, variant_name, total_stock, price, bust, length):
         self.product_id = product_id
         self.variant_name = variant_name
         self.total_stock = total_stock
         self.price = price
+        self.bust = bust
+        self.length = length
 
     def __repr__(self):
         return "<VariantOptions %r>" % self.id
