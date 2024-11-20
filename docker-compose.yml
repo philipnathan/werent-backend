@@ -11,6 +11,8 @@ services:
             - "3307:3306"
         volumes:
             - mysql_data:/var/lib/mysql
+        networks:
+            - app_network
 
     backend:
         build: .
@@ -18,7 +20,7 @@ services:
         volumes:
             - .:/backend
         ports:
-            - "5000"
+            - "5000:5000"
         depends_on:
             - db
         environment:
@@ -38,7 +40,7 @@ services:
         ports:
             - "80:80"
         volumes:
-            - ./nginx/:/etc/nginx/conf.d/
+            - ./app/nginx/:/etc/nginx/conf.d/
         depends_on:
             - backend
         restart: unless-stopped
