@@ -89,6 +89,18 @@ responses:
                                         position:
                                             type: integer
                                             example: 0
+                            total_stock:
+                                type: integer
+                                example: 10
+                            price:
+                                type: number
+                                example: 1000
+                            bust:
+                                type: number
+                                example: 90
+                            length:
+                                type: number
+                                example: 100
                 price:
                     type: number
                     example: 1000
@@ -140,7 +152,7 @@ responses:
                                             example: 0
                 fit:
                     type: string
-                    example: "S"
+                    example: "Slim Fit"
                 fabric:
                     type: string
                     example: "Cotton"
