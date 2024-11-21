@@ -59,5 +59,4 @@ class Reviews(db.Model):
             "comment": self.comment,
             "created_at": self.created_at,
             "like_count": self.like_count,
-            "review_medias": self.media_list,
         }
