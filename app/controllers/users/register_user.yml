@@ -3,22 +3,24 @@ tags:
 summary: Create User
 description: Create User
 parameters:
-    - name: username
-      in: formData
+    - name: request
+      in: body
       required: true
-      type: string
-    - name: email
-      in: formData
-      required: true
-      type: string
-    - name: password
-      in: formData
-      required: true
-      type: string
-    - name: phone_number
-      in: formData
-      required: true
-      type: string
+      schema:
+          type: object
+          properties:
+              username:
+                  type: string
+                  example: "admin"
+              email:
+                  type: string
+                  example: "admin@admin.com"
+              password:
+                  type: string
+                  example: "admin"
+              phone_number:
+                  type: string
+                  example: "1234567890"
 responses:
     201:
         description: User created

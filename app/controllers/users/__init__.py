@@ -19,11 +19,12 @@ users_routes = Blueprint("users_routes", __name__, url_prefix="/api/v1")
 @swag_from("./register_user.yml")
 def register_user():
     try:
+        req = request.get_json()
         NewUser = Users(
-            username=request.form["username"],
-            email=request.form["email"],
-            password=request.form["password"],
-            phone_number=request.form["phone_number"],
+            username=req.get("username"),
+            email=req.get("email"),
+            password=req.get("password"),
+            phone_number=req.get("phone_number"),
         )
         # NewUser.set_password(request.form["password"])
         db.session.add(NewUser)
@@ -31,7 +32,7 @@ def register_user():
     except Exception as e:
         print(e)
         db.session.rollback()
-        return {"message": "Fail to Register New User"}, 500
+        return {"message": str(e)}, 500
 
     return {"message": "Success to Create New User"}, 201
 
@@ -40,14 +41,15 @@ def register_user():
 @swag_from("./login_user.yml")
 def login_user():
     try:
-        email = request.form["email"]
+        req = request.get_json()
+        email = req.get("email")
         # user = s.query(Users).filter(Users.email == email).first()
         user = Users.query.filter_by(email=email).first()
 
         if user is None:
             return {"message": "User not found"}, 403
 
-        if not user.check_password(request.form["password"]):
+        if not user.check_password(req.get("password")):
             return {"message": "Invalid password"}, 403
 
         acces_token = create_access_token(
@@ -72,7 +74,7 @@ def login_user():
     except Exception as e:
         print(e)
         db.session.rollback()
-        return {"message": "Failed to Login User"}, 500
+        return {"message": str(e)}, 500
 
 
 @users_routes.route("/auth/refresh", methods=["POST"])
@@ -128,14 +130,15 @@ def get_current_user():
 @swag_from("./edit_user.yml")
 def update_current_user():
     current_user_id = get_jwt_identity()
-    print(current_user_id)
     try:
         # user = s.query(Users).filter(Users.id == current_user_id).first()
         user = Users.query.filter_by(id=current_user_id).first()
         if not user:
             return {"message": "User not found"}, 404
 
-        if "password" in request.form:
+        req = request.get_json()
+        password = req.get("password")
+        if password:
             user.password = user.set_password(request.form["password"])
 
         # tidak perlu update_at, otomatis terisi kalau ada perubahan data di database
