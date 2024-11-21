@@ -31,12 +31,11 @@ class Users(db.Model):
     def __repr__(self):
         return "<User %r>" % self.username
 
-    def __init__(self, email, username, password, phone_number, image_url):
+    def __init__(self, email, username, password, phone_number):
         self.email = email
         self.username = username
         self.phone_number = phone_number
         self.password = self.set_password(password)
-        self.image_url = image_url
 
     def set_password(self, password):
         return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
