@@ -1,0 +1,109 @@
+tags:
+    - Create Product
+summary: Create Variant Options
+description: Create Variant Options
+parameters:
+    - name: product_id
+      in: path
+      required: true
+      type: integer
+      example: 1
+    - name: variant_name
+      in: formData
+      required: true
+      type: string
+      example: "S"
+    - name: total_stock
+      in: formData
+      required: true
+      type: integer
+      example: 10
+    - name: price
+      in: formData
+      required: true
+      type: number
+      example: 1000
+    - name: bust
+      in: formData
+      required: true
+      type: number
+      example: 100
+    - name: length
+      in: formData
+      required: true
+      type: number
+      example: 100
+    - name: media
+      in: formData
+      required: true
+      type: file
+      description: "Multiple files can be uploaded by sending multiple 'media' parameters."
+responses:
+    201:
+        description: Created
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: "Variant option created successfully"
+                variant_option:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                            example: 1
+                        product_id:
+                            type: integer
+                            example: 1
+                        variant_name:
+                            type: string
+                            example: "S"
+                        variant_medias:
+                            type: array
+                            items:
+                                type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                        example: 1
+                                    variant_option_id:
+                                        type: integer
+                                        example: 1
+                                    url:
+                                        type: string
+                                        example: "https://www.google.com"
+                                    format_item:
+                                        type: string
+                                        example: "image"
+                                    position:
+                                        type: integer
+                                        example: 1
+                        total_stock:
+                            type: integer
+                            example: 10
+                        price:
+                            type: number
+                            example: 1000
+                        bust:
+                            type: number
+                            example: 100
+                        length:
+                            type: number
+                            example: 100
+    400:
+        description: Bad Request
+        schema:
+            type: object
+            properties:
+                error:
+                    type: string
+                    example: "Maximum of 3 variant medias allowed"
+    500:
+        description: Internal Server Error
+        schema:
+            type: object
+            properties:
+                error:
+                    type: string
+                    example: "Internal Server Error"
