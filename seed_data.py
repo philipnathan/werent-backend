@@ -113,7 +113,8 @@ def seed_stores():
         ]
 
         for st in store:
-            db.session.add(Stores(**store))
+            db.session.add(Stores(**st))
+
         db.session.commit()
 
         print("Seeded stores")
