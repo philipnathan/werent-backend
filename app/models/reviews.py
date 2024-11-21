@@ -50,7 +50,10 @@ class Reviews(db.Model):
 
         return {
             "id": self.id,
-            "user": user["username"],
+            "user": {
+                "username": user.get("username"),
+                "image_url": user.get("image_url"),
+            },
             "product_id": self.product_id,
             "rating": self.rating,
             "comment": self.comment,

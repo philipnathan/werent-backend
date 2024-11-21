@@ -20,8 +20,14 @@ responses:
                         type: integer
                         example: 1
                     user:
-                        type: string
-                        example: "User 1"
+                        type: object
+                        properties:
+                            username:
+                                type: string
+                                example: "User 1"
+                            image_url:
+                                type: string
+                                example: "https://www.google.com"
                     product_id:
                         type: integer
                         example: 1
