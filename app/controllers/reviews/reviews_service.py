@@ -81,6 +81,7 @@ class ReviewService:
                                     "position": position,
                                 }
                             )
+                            position += 1
                         else:
                             raise Exception(
                                 f"Failed to upload file: {result.get('error')}"
