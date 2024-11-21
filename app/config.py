@@ -7,7 +7,7 @@ load_dotenv(override=True)
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY")
     ALLOWED_EXTENSIONS_REVIEW_MEDIA = {"png", "jpg", "jpeg", "mp4", "mov"}
-    MAX_FILE_SIZE_REVIEW_MEDIA = 2 * 1024 * 1024  # 2MB
+    MAX_FILE_SIZE_REVIEW_MEDIA = 6 * 1024 * 1024  # 6MB
     MAX_NUMBER_OF_REVIEW_MEDIA = 3
 
 
