@@ -19,18 +19,30 @@ users_routes = Blueprint("users_routes", __name__, url_prefix="/api/v1")
 @swag_from("./register_user.yml")
 def register_user():
     try:
-        req = request.get_json()
-        NewUser = Users(
-            username=req.get("username"),
-            email=req.get("email"),
-            password=req.get("password"),
-            phone_number=req.get("phone_number"),
-        )
+        properties = ["username", "email", "password", "phone_number"]
+        data = {}
+
+        # check if any property is missing
+        for prop in properties:
+            value = request.get_json().get(prop)
+            if value is None:
+                raise ValueError(f"{prop} is required")
+
+        for prop in properties:
+            value = request.get_json().get(prop)
+            if prop != "password":
+                user = Users.query.filter(getattr(Users, prop) == value).first()
+                if user:
+                    raise ValueError(f"{prop} already exists")
+                data[prop] = value
+
+        data["password"] = request.get_json().get("password")
+        new_user = Users(**data)
+
         # NewUser.set_password(request.form["password"])
-        db.session.add(NewUser)
+        db.session.add(new_user)
         db.session.commit()
     except Exception as e:
-        print(e)
         db.session.rollback()
         return {"message": str(e)}, 500
 
