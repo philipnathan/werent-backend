@@ -1,6 +1,15 @@
 from app.db import db
 from run import app
-from app.models import Districts, Users, Stores, Products, VariantOptions, VariantMedias
+from app.models import (
+    Districts,
+    Users,
+    Stores,
+    Products,
+    VariantOptions,
+    VariantMedias,
+    Reviews,
+    ReviewMedias,
+)
 
 
 def seed_districts():
@@ -242,6 +251,22 @@ def seed_variant_medias():
 
         print("Seeded variant medias")
 
+    except Exception as e:
+        db.session.rollback()
+        print(e)
+
+
+def seed_reviews():
+    try:
+        reviews = [
+            {
+                "user_id": 1,
+                "product_id": 1,
+                "rating": 5,
+                "comment": "Good product",
+                "id": 1,
+            }
+        ]
     except Exception as e:
         db.session.rollback()
         print(e)
