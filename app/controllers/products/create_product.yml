@@ -1,0 +1,54 @@
+tags:
+    - Create Product
+summary: Create Product
+description: Create Product
+parameters:
+    - name: request
+      in: body
+      required: true
+      schema:
+          type: object
+          properties:
+              name:
+                  type: string
+                  example: "T-Shirt"
+              store_id:
+                  type: integer
+                  example: 1
+              description:
+                  type: string
+                  example: "T-Shirt description"
+              fit:
+                  type: string
+                  example: "Slim"
+              fabric:
+                  type: string
+                  example: "Cotton"
+responses:
+    201:
+        description: Product created
+        schema:
+            type: object
+            properties:
+                message:
+                    type: string
+                    example: "Product created successfully"
+                product_id:
+                    type: integer
+                    example: 1
+    400:
+        description: Input Validation Error
+        schema:
+            type: object
+            properties:
+                error:
+                    type: string
+                    example: "name is required"
+    500:
+        description: Internal Server Error
+        schema:
+            type: object
+            properties:
+                error:
+                    type: string
+                    example: "Internal Server Error"

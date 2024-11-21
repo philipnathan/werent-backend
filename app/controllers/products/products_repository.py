@@ -14,3 +14,7 @@ class ProductRepository:
     def get_product(self, product_id):
         product = self.product.query.get(product_id)
         return product
+
+    def create_product(self, data):
+        product = self.product(**data)
+        return product
