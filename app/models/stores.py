@@ -29,7 +29,7 @@ class Stores(db.Model):
     def __repr__(self):
         return "<Stores %r>" % self.name
 
-    def __init__(self, name, store_address, user_id, district_id, image_url):
+    def __init__(self, name, store_address, user_id, district_id, image_url=None):
         self.name = name
         self.slug = slugify.slugify(name)
         self.store_address = store_address
