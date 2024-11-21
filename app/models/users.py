@@ -22,7 +22,7 @@ class Users(db.Model):
         db.DateTime(), nullable=True, onupdate=lambda: datetime.now(pytz.UTC)
     )
 
-    stores = db.relationship("Stores", backref="users_stores")
+    stores = db.relationship("Stores", uselist=False, backref="users_stores")
     shipment_addresses = db.relationship(
         "ShipmentAddresses", backref="users_shipment_addresses"
     )
