@@ -9,14 +9,29 @@ def seed_districts():
             print("District data already seeded")
             return
 
-        districts = {
-            "id": 1,
-            "province_id": 1,
-            "province_name": "Bali",
-            "district_name": "Denpasar",
-        }
+        districts = [
+            {
+                "id": 1,
+                "province_id": 1,
+                "province_name": "Bali",
+                "district_name": "Denpasar",
+            },
+            {
+                "id": 2,
+                "province_id": 2,
+                "province_name": "Jawa Barat",
+                "district_name": "Bandung",
+            },
+            {
+                "id": 3,
+                "province_id": 3,
+                "province_name": "Jawa Tengah",
+                "district_name": "Surabaya",
+            },
+        ]
 
-        db.session.add(Districts(**districts))
+        for dis in districts:
+            db.session.add(Districts(**dis))
         db.session.commit()
 
         print("Seeded districts")
@@ -32,15 +47,32 @@ def seed_users():
             print("User data already seeded")
             return
 
-        user = {
-            "email": "admin@werent.com",
-            "username": "admin",
-            "password": "admin",
-            "phone_number": "081234567890",
-            "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/admin_image.png",
-        }
+        user = [
+            {
+                "email": "admin@werent.com",
+                "username": "admin",
+                "password": "admin",
+                "phone_number": "081234567890",
+                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/admin_image.png",
+            },
+            {
+                "email": "admin1@werent.com",
+                "username": "admin1",
+                "password": "admin1",
+                "phone_number": "081234567891",
+                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/admin_image.png",
+            },
+            {
+                "email": "admin2@werent.com",
+                "username": "admin2",
+                "password": "admin2",
+                "phone_number": "081234567892",
+                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/admin_image.png",
+            },
+        ]
 
-        db.session.add(Users(**user))
+        for us in user:
+            db.session.add(Users(**us))
         db.session.commit()
 
         print("Seeded users")
@@ -56,21 +88,32 @@ def seed_stores():
             print("Store data already seeded")
             return
 
-        user = Users.query.first()
-        user_id = user.id
+        store = [
+            {
+                "name": "Milestone 1",
+                "store_address": "Jl. Jend. Sudirman No. 1",
+                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/store-image.png",
+                "user_id": 1,
+                "district_id": 1,
+            },
+            {
+                "name": "Milestone 2",
+                "store_address": "Jl. Jend. Sudirman No. 2",
+                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/store-image.png",
+                "user_id": 2,
+                "district_id": 2,
+            },
+            {
+                "name": "Milestone 3",
+                "store_address": "Jl. Jend. Sudirman No. 3",
+                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/store-image.png",
+                "user_id": 3,
+                "district_id": 3,
+            },
+        ]
 
-        district = Districts.query.first()
-        district_id = district.id
-
-        store = {
-            "name": "Milestone 1",
-            "store_address": "Jl. Jend. Sudirman No. 1",
-            "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/store-image.png",
-            "user_id": user_id,
-            "district_id": district_id,
-        }
-
-        db.session.add(Stores(**store))
+        for st in store:
+            db.session.add(Stores(**store))
         db.session.commit()
 
         print("Seeded stores")
