@@ -48,15 +48,16 @@ To install Docker, follow the official guide for your operating system:
 
 Create a `.env` file in the root directory of your project and configure the following variables:
 
+```txt
 FLASK_ENV=development
 FLASK_DEBUG=True
-
 DATABASE_HOST=localhost
 DATABASE_PORT=3307
 DATABASE_NAME=db
 DATABASE_USER=root
 DATABASE_PASSWORD=db
 JWT_SECRET_KEY=your_secret_key
+```
 
 ## Database Setup
 
@@ -71,7 +72,7 @@ To initialize and update the database schema, run the following commands inside 
 ````bash
 docker-compose exec backend flask db migrate -m "Initial migration"
 docker-compose exec backend flask db upgrade
-
+```
 
 ## Running the Application
 
@@ -81,6 +82,7 @@ Build the required Docker images:
 
 ```bash
 docker-compose build --no-cache
+```
 
 ## Start the Application
 
@@ -88,7 +90,7 @@ Run the following command to start the application:
 
 ```bash
 docker-compose up
-
+```
 
 ## Once the Application is Running
 
@@ -105,7 +107,7 @@ To stop the application gracefully, follow these steps:
 
 ```bash
 docker-compose down
-
+```
 
 ## Resetting the Application
 
@@ -116,7 +118,7 @@ If you encounter errors or need a fresh start, follow these steps:
 
 ```bash
 docker-compose down -v
-
+```
 
 ## API Endpoints
 
@@ -154,7 +156,7 @@ Install the following dependencies for production:
 
 ```bash
 poetry add gunicorn docker
-
+```
 
 ## Build the Docker Image
 
@@ -162,7 +164,7 @@ To build the Docker image, run the following command:
 
 ```bash
 docker build -t werent-backend .
-
+```
 
 ## Run the Docker Container
 
@@ -170,7 +172,7 @@ To run the Docker container, execute the following command:
 
 ```bash
 docker run -p 5000:5000 --env-file .env werent-backend
-
+```
 
 ## Deploy on Railway
 
