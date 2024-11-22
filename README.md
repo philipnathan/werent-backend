@@ -10,12 +10,12 @@ WERENT is a backend service that supports property rental applications. It provi
 -   [Installation](#installation)
 -   [Environment Variables](#environment-variables)
 -   [Database Setup](#database-setup)
--   [Running the Application](#running-the-application)
+-   [Build the Application](#build-the-application)
+-   [Start the Application](#start-the-application)
 -   [Stopping the Application](#stopping-the-application)
 -   [Resetting the Application](#resetting-the-application)
 -   [API Endpoints](#api-endpoints)
 -   [API Documentation](#api-documentation)
--   [Deployment](#deployment)
 
 ## Overview
 
