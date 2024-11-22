@@ -25,14 +25,13 @@ WERENT Backend is a Dockerized Flask application that interacts with a MySQL dat
 
 The Entity-Relationship Diagram (ERD) provides an overview of the database structure:
 
-![Entity-Relationship-Diagram](./ERD.drawio.png)
+![Entity-Relationship-Diagram](./ERD.png)
 
 ## Prerequisites
 
 Ensure the following are installed on your system:
 
 -   **Docker** (for containerized application setup)
--   **Python 3.10** (optional, for non-Docker local development)
 
 ## Installation
 
@@ -49,32 +48,20 @@ To install Docker, follow the official guide for your operating system:
 Create a `.env` file in the root directory of your project and configure the following variables:
 
 ```txt
+SECRET_KEY=your_secret_key
+MYSQL_USER=root
+MYSQL_HOST=db
+MYSQL_PORT=3306
+MYSQL_DATABASE=db
+MYSQL_PASSWORD=db
+MYSQL_ROOT_PASSWORD=db
 FLASK_ENV=development
-FLASK_DEBUG=True
-DATABASE_HOST=localhost
-DATABASE_PORT=3307
-DATABASE_NAME=db
-DATABASE_USER=root
-DATABASE_PASSWORD=db
-JWT_SECRET_KEY=your_secret_key
+
+AWS_ACCESS_KEY_ID=your_aws_access_key_id
+AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+AWS_REGION_NAME=s3_bucket_region
+AWS_BUCKET_NAME=s3_bucket_name
 ```
-
-## Database Setup
-
-### Ensure MySQL is Running
-
-Make sure MySQL is running and matches the configuration in your `.env` file.
-
-### Run Migrations
-
-To initialize and update the database schema, run the following commands inside the Docker container:
-
-````bash
-docker-compose exec backend flask db migrate -m "Initial migration"
-docker-compose exec backend flask db upgrade
-```
-
-## Running the Application
 
 ### Build the Application
 
@@ -120,26 +107,32 @@ If you encounter errors or need a fresh start, follow these steps:
 docker-compose down -v
 ```
 
+3. Start the application with following command
+
+```bash
+docker-compose up
+```
+
 ## API Endpoints
 
 Below are the available API endpoints in the application:
 
-### **Users**
+### **Authentication**
 
-- `GET /users`: Retrieve a list of all users.
-- `POST /users`: Create a new user.
+-   `POST /api/v1/auth/login`: To login
+-   `POST /api/v1/auth/refresh`: To obtain a new access token
+-   `POST /api/v1/auth/register`: To register a new user
+-   `DELETE /api/v1/users/me`: Too deactivate the user
+-   `GET /api/v1/users/me`: To retrieve user information
+-   ` PUT /api/v1/users/me`: To update the user's password
 
 ### **Products**
 
-- `GET /products`: Retrieve a list of all products.
-- `POST /products`: Add a new product.
-
-### **Transactions**
-
-- `POST /transactions`: Create a new transaction.
-- `GET /transactions/:id`: Retrieve transaction details by ID.
-
----
+-   `GET /api/v1/products`: Retrieve all products
+-   `GET /api/v1/products/{product_id}`: To retrieve details of a specific product
+-   `GET /api/v1/products/{product_id}/reviews`: To retrieve all reviews for a specific product
+-   `POST /api/v1/products/{product_id}/reviews: To create a review for a product
+-   `POST /api/v1/reviews/{review_id}: To add a like to a review
 
 ## API Documentation
 
@@ -148,67 +141,14 @@ Detailed API documentation is available at:
 
 ---
 
-## Deployment
-
-### **Build Docker Image**
-
-Install the following dependencies for production:
-
-```bash
-poetry add gunicorn docker
-```
-
-## Build the Docker Image
-
-To build the Docker image, run the following command:
-
-```bash
-docker build -t werent-backend .
-```
-
-## Run the Docker Container
-
-To run the Docker container, execute the following command:
-
-```bash
-docker run -p 5000:5000 --env-file .env werent-backend
-```
-
-## Deploy on Railway
-
-### 1. Login to Railway
-Log in to Railway using your GitHub account.
-
-### 2. Select the Repository
-Choose your GitHub repository for deployment.
-
-### 3. Configure Environment Variables
-Add all the `.env` variables in the Railway settings.
-
-### 4. Update Deployment Settings
-- Set `FLASK_DEBUG=False`.
-- Change `FLASK_ENV=development` to `FLASK_ENV=production`.
-
-### 5. Deploy the Application
-Follow Railway's deployment process, and your application will be live.
-
----
-
 ## Notes
 
-- Changes to the code are automatically reflected in the Docker container if the app is running.
-- For accessing the database directly, use a tool like **DBeaver** with the following connection details:
-  - **Host**: `localhost`
-  - **Port**: `3307`
-  - **Database**: `db`
-  - **Username**: `root`
-  - **Password**: `db`
+-   Changes to the code are automatically reflected in the Docker container if the app is running.
+-   For accessing the database directly, use a tool like **DBeaver** with the following connection details:
+    -   **Host**: `localhost`
+    -   **Port**: `3307`
+    -   **Database**: `db`
+    -   **Username**: `root`
+    -   **Password**: `db`
 
 ---
-
-## Contributing
-
-If you'd like to contribute to the project, feel free to create a pull request. For major changes, open an issue first to discuss your proposed updates.
-
-
-````
