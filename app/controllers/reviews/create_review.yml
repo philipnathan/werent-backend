@@ -27,7 +27,7 @@ parameters:
       example: "Good product"
     - name: media
       in: formData
-      required: true
+      required: false
       type: file
 responses:
     201:
