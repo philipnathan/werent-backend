@@ -144,7 +144,7 @@ Below are the available API endpoints in the application:
 ## API Documentation
 
 Detailed API documentation is available at:
-[WERENT API Documentation](https://documenter.getpostman.com/view/example)
+[WERENT API Documentation](http://ec2-108-136-243-165.ap-southeast-3.compute.amazonaws.com/apidocs/#/)
 
 ---
 
