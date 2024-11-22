@@ -47,7 +47,6 @@ To install Docker, follow the official guide for your operating system:
 
 Create a `.env` file in the root directory of your project and configure the following variables:
 
-```plaintext
 FLASK_ENV=development
 FLASK_DEBUG=True
 
