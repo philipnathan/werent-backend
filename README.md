@@ -4,18 +4,18 @@ WERENT is a backend service that supports property rental applications. It provi
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [ERD](#erd)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Environment Variables](#environment-variables)
-- [Database Setup](#database-setup)
-- [Running the Application](#running-the-application)
-- [Stopping the Application](#stopping-the-application)
-- [Resetting the Application](#resetting-the-application)
-- [API Endpoints](#api-endpoints)
-- [API Documentation](#api-documentation)
-- [Deployment](#deployment)
+-   [Overview](#overview)
+-   [ERD](#erd)
+-   [Prerequisites](#prerequisites)
+-   [Installation](#installation)
+-   [Environment Variables](#environment-variables)
+-   [Database Setup](#database-setup)
+-   [Running the Application](#running-the-application)
+-   [Stopping the Application](#stopping-the-application)
+-   [Resetting the Application](#resetting-the-application)
+-   [API Endpoints](#api-endpoints)
+-   [API Documentation](#api-documentation)
+-   [Deployment](#deployment)
 
 ## Overview
 
@@ -31,15 +31,16 @@ The Entity-Relationship Diagram (ERD) provides an overview of the database struc
 
 Ensure the following are installed on your system:
 
-- **Docker** (for containerized application setup)
-- **Python 3.10** (optional, for non-Docker local development)
+-   **Docker** (for containerized application setup)
+-   **Python 3.10** (optional, for non-Docker local development)
 
 ## Installation
 
 ### Install Docker
 
 To install Docker, follow the official guide for your operating system:
-- [Docker installation guide](https://docs.docker.com/get-docker/)
+
+-   [Docker installation guide](https://docs.docker.com/get-docker/)
 
 ---
 
@@ -57,7 +58,6 @@ DATABASE_USER=root
 DATABASE_PASSWORD=db
 JWT_SECRET_KEY=your_secret_key
 
-
 ## Database Setup
 
 ### Ensure MySQL is Running
@@ -68,7 +68,7 @@ Make sure MySQL is running and matches the configuration in your `.env` file.
 
 To initialize and update the database schema, run the following commands inside the Docker container:
 
-```bash
+````bash
 docker-compose exec backend flask db migrate -m "Initial migration"
 docker-compose exec backend flask db upgrade
 
@@ -141,7 +141,7 @@ Below are the available API endpoints in the application:
 
 ## API Documentation
 
-Detailed API documentation is available at:  
+Detailed API documentation is available at:
 [WERENT API Documentation](https://documenter.getpostman.com/view/example)
 
 ---
@@ -209,3 +209,4 @@ Follow Railway's deployment process, and your application will be live.
 If you'd like to contribute to the project, feel free to create a pull request. For major changes, open an issue first to discuss your proposed updates.
 
 
+````
