@@ -1,3 +1,6 @@
+import random
+from data import mockProducts
+
 from app.db import db
 from run import app
 from app.models import (
@@ -8,7 +11,6 @@ from app.models import (
     VariantOptions,
     VariantMedias,
     Reviews,
-    ReviewMedias,
 )
 
 
@@ -49,238 +51,149 @@ def seed_districts():
         print(e)
 
 
-def seed_users():
-
+def seeding(eq):
     try:
-        if Users.query.first():
-            print("User data already seeded")
-            return
+        designer_without_space_and_lowercase = (
+            eq["designer_name"].replace(" ", "").lower()
+        )
+        d = designer_without_space_and_lowercase
+        position = 0
 
-        user = [
-            {
-                "email": "admin@werent.com",
-                "username": "admin",
-                "password": "admin",
-                "phone_number": "081234567890",
-                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/admin_image.png",
-            },
-            {
-                "email": "admin1@werent.com",
-                "username": "admin1",
-                "password": "admin1",
-                "phone_number": "081234567891",
-                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/admin_image.png",
-            },
-            {
-                "email": "admin2@werent.com",
-                "username": "admin2",
-                "password": "admin2",
-                "phone_number": "081234567892",
-                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/admin_image.png",
-            },
-        ]
+        new_user = Users(
+            username=f"{eq['designer_name']}{random.randrange(1, 10000)}",
+            email=f"{d}@{d}{random_10_digit()}.com",
+            password=f"{d}",
+            image_url=eq.get("image_designer"),
+            phone_number=random_10_digit(),
+        )
 
-        for us in user:
-            db.session.add(Users(**us))
+        db.session.add(new_user)
+        db.session.commit()
+        print("success add user")
+
+        new_store = Stores(
+            name=f"{eq["designer_name"]}.{random.randrange(1, 10000)}",
+            store_address=eq["designer_name"],
+            image_url=eq.get("image_designer"),
+            user_id=new_user.id,
+            district_id=random.randrange(1, 3),
+        )
+
+        db.session.add(new_store)
+        db.session.commit()
+        print("success add store")
+
+        new_product = Products(
+            name=eq.get("title"),
+            store_id=new_store.id,
+            description=eq.get("title"),
+            fit=eq.get("fit", "Slim Fit"),
+            fabric=eq.get("fabric", "Cotton"),
+        )
+
+        db.session.add(new_product)
+        db.session.commit()
+        print("success add product")
+
+        new_variant = VariantOptions(
+            product_id=new_product.id,
+            variant_name=(
+                eq.get("dimensions", None).get("size", None)
+                if eq.get("dimensions")
+                else "S"
+            ),
+            total_stock=random.randrange(1, 10),
+            price=random.randrange(15000, 2000000, 5000),
+            bust=(
+                int(eq.get("dimensions", None).get("waist", None))
+                if eq.get("dimensions")
+                else 50
+            ),
+            length=(
+                int(eq.get("dimensions", None).get("length", None))
+                if eq.get("dimensions")
+                else 100
+            ),
+        )
+
+        db.session.add(new_variant)
+        db.session.commit()
+        print("success add variant")
+
+        new_media = []
+        if isinstance(eq.get("images"), list):
+            for img in eq["images"]:
+                var_med = VariantMedias(
+                    variant_option_id=new_variant.id,
+                    url=(
+                        img
+                        if img
+                        else "https://images.pexels.com/photos/3765550/pexels-photo-3765550.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    ),
+                    format_item="image/jpg",
+                    position=position,
+                )
+                new_media.append(var_med)
+                position += 1
+
+        else:
+            var_med = VariantMedias(
+                variant_option_id=new_variant.id,
+                url=eq.get(
+                    "images",
+                    "https://images.pexels.com/photos/3765550/pexels-photo-3765550.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                ),
+                format_item="image/jpg",
+                position=position,
+            )
+            new_media.append(var_med)
+
+        db.session.add_all(new_media)
+        db.session.commit()
+        print("success add media")
+
+        reviews = []
+        for review in eq["review"]:
+            reviewer = Users(
+                username=f"{review['user_name']}{random.randrange(1, 10000)}",
+                email=f"{review['user_name']}@{review['user_name']}{random_10_digit()}.com",
+                password=f"{review['user_name'].replace(' ', '').lower()}",
+                image_url=review["user_avatar"],
+                phone_number=random_10_digit(),
+            )
+
+            db.session.add(reviewer)
+            db.session.commit()
+
+            new_review = Reviews(
+                user_id=reviewer.id,
+                product_id=new_product.id,
+                rating=review["rating"],
+                comment=review["comment"],
+                id=random_10_digit(),
+            )
+
+            reviews.append(new_review)
+
+        db.session.add_all(reviews)
         db.session.commit()
 
-        print("Seeded users")
-
+        print("success add review")
     except Exception as e:
         db.session.rollback()
         print(e)
 
 
-def seed_stores():
-    try:
-        if Stores.query.first():
-            print("Store data already seeded")
-            return
-
-        store = [
-            {
-                "name": "Milestone 1",
-                "store_address": "Jl. Jend. Sudirman No. 1",
-                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/store-image.png",
-                "user_id": 1,
-                "district_id": 1,
-            },
-            {
-                "name": "Milestone 2",
-                "store_address": "Jl. Jend. Sudirman No. 2",
-                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/store-image.png",
-                "user_id": 2,
-                "district_id": 2,
-            },
-            {
-                "name": "Milestone 3",
-                "store_address": "Jl. Jend. Sudirman No. 3",
-                "image_url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/store-image.png",
-                "user_id": 3,
-                "district_id": 3,
-            },
-        ]
-
-        for st in store:
-            db.session.add(Stores(**st))
-
-        db.session.commit()
-
-        print("Seeded stores")
-
-    except Exception as e:
-        db.session.rollback()
-        print(e)
-
-
-def seed_products():
-    try:
-        if Products.query.first():
-            print("Product data already seeded")
-            return
-
-        store = Stores.query.first()
-        store_id = store.id
-
-        product = {
-            "store_id": store_id,
-            "name": "T-Shirt",
-            "description": "T-Shirt description",
-            "fit": "Slim",
-            "fabric": "Cotton",
-        }
-
-        db.session.add(Products(**product))
-        db.session.commit()
-
-        print("Seeded products")
-
-    except Exception as e:
-        db.session.rollback()
-        print(e)
-
-
-def seed_products_variant_options():
-    try:
-        if VariantOptions.query.first():
-            print("Product variant data already seeded")
-            return
-
-        product = Products.query.first()
-        product_id = product.id
-
-        variant_product_1 = {
-            "product_id": product_id,
-            "variant_name": "S",
-            "total_stock": 10,
-            "price": 10000,
-            "bust": 90,
-            "length": 100,
-        }
-
-        variant_product_2 = {
-            "product_id": product_id,
-            "variant_name": "M",
-            "total_stock": 10,
-            "price": 10000,
-            "bust": 90,
-            "length": 100,
-        }
-
-        variant_product_3 = {
-            "product_id": product_id,
-            "variant_name": "L",
-            "total_stock": 10,
-            "price": 10000,
-            "bust": 90,
-            "length": 100,
-        }
-
-        db.session.add(VariantOptions(**variant_product_1))
-        db.session.add(VariantOptions(**variant_product_2))
-        db.session.add(VariantOptions(**variant_product_3))
-        db.session.commit()
-
-        print("Seeded products variant options")
-
-    except Exception as e:
-        db.session.rollback()
-        print(e)
-
-
-def seed_variant_medias():
-    try:
-        if VariantMedias.query.first():
-            print("Product variant media data already seeded")
-            return
-
-        variant_option_1 = VariantOptions.query.filter_by(variant_name="S").first()
-        variant_option_1_id = variant_option_1.id
-
-        variant_option_2 = VariantOptions.query.filter_by(variant_name="M").first()
-        variant_option_2_id = variant_option_2.id
-
-        variant_option_3 = VariantOptions.query.filter_by(variant_name="L").first()
-        variant_option_3_id = variant_option_3.id
-
-        variant_media_1 = {
-            "variant_option_id": variant_option_1_id,
-            "url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/s-3.png",
-            "format_item": "image/png",
-            "position": 0,
-        }
-
-        variant_media_2 = {
-            "variant_option_id": variant_option_2_id,
-            "url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/s-2.png",
-            "format_item": "image/png",
-            "position": 0,
-        }
-
-        variant_media_3 = {
-            "variant_option_id": variant_option_3_id,
-            "url": "https://milestone-1-s3-bucket.s3.ap-southeast-3.amazonaws.com/s-image.png",
-            "format_item": "image/png",
-            "position": 0,
-        }
-
-        db.session.add(VariantMedias(**variant_media_1))
-        db.session.add(VariantMedias(**variant_media_2))
-        db.session.add(VariantMedias(**variant_media_3))
-        db.session.commit()
-
-        print("Seeded variant medias")
-
-    except Exception as e:
-        db.session.rollback()
-        print(e)
-
-
-def seed_reviews():
-    try:
-        reviews = [
-            {
-                "user_id": 1,
-                "product_id": 1,
-                "rating": 5,
-                "comment": "Good product",
-                "id": 1,
-            }
-        ]
-    except Exception as e:
-        db.session.rollback()
-        print(e)
+def random_10_digit():
+    return "".join(str(random.randint(0, 9)) for _ in range(10))
 
 
 if __name__ == "__main__":
     with app.app_context():
         try:
             seed_districts()
-            seed_users()
-            seed_stores()
-            seed_products()
-            seed_products_variant_options()
-            seed_variant_medias()
+            for eq in mockProducts:
+                seeding(eq)
 
             print("Seeded data successfully")
         except Exception as e:
