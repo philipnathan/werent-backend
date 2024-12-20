@@ -77,8 +77,6 @@ def login_user():
 
         refresh_token = create_refresh_token(identity=str(user.id))
         return {
-            "email": user.email,
-            "id": user.id,
             "access_token": acces_token,
             "refresh_token": refresh_token,
             "message": "Success to Login user",
